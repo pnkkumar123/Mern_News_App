@@ -1,43 +1,41 @@
-import  { useEffect } from 'react'
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux'
-import { fetchNews } from '../State-management/NewsSlice';
+
+import { useState } from "react";
+import { useGetNewsQuery } from "../services/NewsSlice";
 
 export default function WorldNews() {
-    const dispatch = useDispatch();
-    const newsData = useSelector((state)=>state.news.data);
-    console.log(newsData);
-    const status = useSelector((state)=>state.news.status);
-    const error = useSelector((state)=>state.news.error);
-  useEffect(()=>{
-    if(status === 'idle'){
-        dispatch(fetchNews());
+    const [country,setCountry] = useState('us')
+    const {data,isFetching,error} = useGetNewsQuery(country);
+
+    const handleCountryChange = (newCountry)=>{
+        setCountry(newCountry)
     }
-  },[status,dispatch]);
-  if (status === 'loading'){
-    return <div>Loading....</div>
-  }
-  if(status === 'failed'){
-    return <div>Error: {error}</div>
-  }
+    console.log(data);
+    
 
     return (
-       <>
-       <div>
-       {newsData && newsData.news.map((curElem)=>{
-        const {Title,Image,Description,PublishedOn} = curElem;
-        console.log(Title);
-        return (
-            <div id={PublishedOn}>
-               <div className='flex fle-col gap-3 h-50 w-50 justify-center'>
-               <h1></h1>
-               <img src={Image} alt="" className='h-40 w-40' />
-               <p>{Title.slice(0,70)}</p>
-               </div>
+        <>
+        <div className="flex justify-center items-center h-screen">
+            {isFetching ? (
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" ></div>
+            ): error ? (
+                <div>Error : {error.message}</div>
+            ):(
+            <div>
+                <button onClick={()=>handleCountryChange('in')}>India</button>
             </div>
-        )
-       })}
-       </div>
-       </>
-  )
+            )}
+            {/* Move the closing parenthesis here */}
+            {data && data.articles.map((curElem)=>{
+                const {urlToImage,description,publishedAt} = curElem;
+                console.log(curElem);
+                return(
+                        <div key={publishedAt}>
+                            <img src={urlToImage ? urlToImage : <img src="https://www.nccpimandtip.gov.eg/uploads/newsImages/1549208279-default-news.png" alt="news"/>} alt="" />
+                               <p>{description ?description.slice(0,100) : description}...</p>
+                        </div>
+                )
+            })}
+        </div>
+        </>
+    );
 }
