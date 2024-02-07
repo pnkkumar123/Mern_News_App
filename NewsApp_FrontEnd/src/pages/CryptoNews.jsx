@@ -12,13 +12,20 @@ export default function CryptoNews() {
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = data?.data?.slice(indexOfFirstArticle, indexOfLastArticle);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
       <div>
         {isFetching ? (
-          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-800'></div>
+          <div className='relative h-32 w-32 border-b-2 border-gray-800'>
+            {/* Position the image over the loading spinner */}
+            <img src="./assets/logo-color.png" className="absolute inset-0 mx-auto" alt="Logo" />
+            {/* Loading spinner */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-800"></div>
+            </div>
+          </div>
         ) : error ? (
           <div>Error: {error.message}</div>
         ) : (
@@ -29,7 +36,7 @@ export default function CryptoNews() {
                 return (
                   <div key={createdAt}>
                     <h2>{title}</h2>
-                    <img src={thumbnail ? thumbnail : '.\assets\bitcoin.png'} alt="" />
+                    <img src={thumbnail ? thumbnail : './assets/bitcoin.png'} alt="" />
                     <p>{description ? description.slice(0, 90) : description}</p>
                   </div>
                 );
@@ -50,4 +57,3 @@ export default function CryptoNews() {
     </>
   );
 }
-

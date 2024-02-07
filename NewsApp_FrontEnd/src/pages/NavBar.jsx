@@ -8,7 +8,7 @@ export default function NavBar() {
    <div className='h-10 w-full'>
     <NavLink to='/'>
 
-        <img src='.\public\Assets\logo.png' loading='lazy' className='h-10 w-30' alt="" />
+        <img src='.\assets\title.png' loading='lazy' className='h-10 w-30' alt="" />
     </NavLink>
     </div>
     <div className='flex flex-row justify-center gap-6 font-bold'>
