@@ -15,6 +15,7 @@ export default function NavBar() {
       <NavLink to='/cryptonews'>Crypto </NavLink>
       <NavLink to='/forexnews'>Forex </NavLink>
       <NavLink to='/worldnews'>World </NavLink>
+      <NavLink to='/signup'>Sign In </NavLink>
 
     </div>
    </div>

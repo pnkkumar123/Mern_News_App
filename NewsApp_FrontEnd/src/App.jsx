@@ -6,6 +6,7 @@ import ForexNews from './pages/ForexNews';
 import CryptoNews from './pages/CryptoNews';
 import WorldNews from './pages/WorldNews';
 import WorldSlide from './pages/WorldSlide';
+import SignUp from './pages/signUp';
 
 function App() {
  
@@ -19,6 +20,7 @@ function App() {
         <Route  path='/forexnews' element={<ForexNews/>}/>
         <Route  path='/cryptonews' element={<CryptoNews/>}/>
         <Route  path='/worldnews' element={<WorldNews/>}/>
+        <Route path='/signup' element={<SignUp/>}/>
       </Routes>
     </>
   )
