@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Auth from '../auth/Auth';
+import SignIn from './SignIn';
+import {Link} from 'react-router-dom';
 
 export default function SignUp() {
     const [formData,setFormData] = useState({
@@ -48,6 +50,12 @@ export default function SignUp() {
         <Auth/>
        </form>
     </div>
+    <div className='flex gap-2 mt-5'>
+        <p>Have an account?</p>
+        <Link to='/signin'><span className='text-blue-500'>Sign in</span></Link>
+             
+    </div>
+    <p className='text-red-700 mt-5'>{error && "something went wrong" }</p>
 
     </>
   )

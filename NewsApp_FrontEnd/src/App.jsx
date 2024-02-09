@@ -6,7 +6,8 @@ import ForexNews from './pages/ForexNews';
 import CryptoNews from './pages/CryptoNews';
 import WorldNews from './pages/WorldNews';
 import WorldSlide from './pages/WorldSlide';
-import SignUp from './pages/signUp';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 function App() {
  
@@ -21,6 +22,7 @@ function App() {
         <Route  path='/cryptonews' element={<CryptoNews/>}/>
         <Route  path='/worldnews' element={<WorldNews/>}/>
         <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/signin' element={<SignIn/>}/>
       </Routes>
     </>
   )
