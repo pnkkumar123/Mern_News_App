@@ -1,15 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { newsApi, cryptonewsApi,forexNewsApi } from '../services/NewsSlice';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import userSlice from "../services/UserSlice";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import persistStore from "redux-persist/es/persistStore";
+import { newsApi, cryptonewsApi, forexNewsApi } from "../services/NewsSlice";
 
-const store = configureStore({
-    reducer: {
-        [newsApi.reducerPath]: newsApi.reducer,
-        [cryptonewsApi.reducerPath]: cryptonewsApi.reducer,
-        [forexNewsApi.reducerPath]: forexNewsApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(newsApi.middleware, cryptonewsApi.middleware,forexNewsApi.middleware),
+// Combine reducers from both stores
+const rootReducer = combineReducers({
+  user: userSlice,
+  [newsApi.reducerPath]: newsApi.reducer,
+  [cryptonewsApi.reducerPath]: cryptonewsApi.reducer,
+  [forexNewsApi.reducerPath]: forexNewsApi.reducer,
 });
 
-export default store;
+// Configure redux-persist
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Merge middleware from both stores
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(
+      newsApi.middleware,
+      cryptonewsApi.middleware,
+      forexNewsApi.middleware
+    ),
+  devTools: process.env.NODE_ENV !== "production",
+});
+
+export const persistor = persistStore(store);
+
+export default store;

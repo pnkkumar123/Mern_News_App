@@ -13,5 +13,14 @@ authRouter.post("/signup",async (req,res,next)=>{
         next(e)
     }
 })
+authRouter.post('/googlelogin',async(req,res,next)=>{
+    try{
+        const user = await User.findOne({email:req.body.email})
+        
+    }
+})
+
+
+
 
 export {authRouter}

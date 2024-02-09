@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Auth from '../auth/Auth';
 
 export default function SignUp() {
     const [formData,setFormData] = useState({
@@ -44,6 +45,7 @@ export default function SignUp() {
         <input onChange={handleChange} type="email" placeholder='email' className='bg-blue-100 p-3 rounded-lg' name='email' id='email'/>
         <input onChange={handleChange} type="password" placeholder='password' className='bg-blue-100 p-3 rounded-lg' id='password' name='bg-blue-100 p-3 rounded-lg'/>
         <button disabled={loading} className='bg-blue-300 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-75'>Sign Up</button>
+        <Auth/>
        </form>
     </div>
 
