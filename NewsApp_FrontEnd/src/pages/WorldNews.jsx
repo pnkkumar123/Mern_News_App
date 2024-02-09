@@ -5,6 +5,7 @@ import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
 export default function WorldNews() {
     const [country, setCountry] = useState('us');
     const { data, isFetching, error } = useGetNewsQuery(country);
+    console.log(data);
     const [savedArticles, setSavedArticles] = useState([]);
 
     const handleCountryChange = (newCountry) => {

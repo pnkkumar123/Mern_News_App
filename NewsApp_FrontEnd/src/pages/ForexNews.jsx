@@ -5,6 +5,7 @@ import { RiBookMarkFill, RiBookMarkLine } from 'react-icons/ri';
 
 export default function ForexNews() {
   const { data, isFetching, error } = useGetForexNewsQuery();
+  console.log(data);
   const [savedArticles, setSavedArticles] = useState([]);
 
   const toggleSaveArticle = (article) => {
