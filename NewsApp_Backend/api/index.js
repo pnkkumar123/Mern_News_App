@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import router from './routes/user.route.js';
 import { authRouter } from './routes/auth.route.js';
 import cors from 'cors';
+import articleRouter from './routes/article.route.js';
 
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.listen(3000,()=>{
 })
 app.use("/api/user",router);
 app.use("/api/auth",authRouter);
+app.use("/api/articles",articleRouter);
 
 app.use((error,req,res,next)=>{
     const statusCode = error.statusCode || 500;

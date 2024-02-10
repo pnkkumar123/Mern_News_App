@@ -7,7 +7,7 @@ export default function CryptoNews() {
   const [articlesPerPage] = useState(10);
   const [savedArticles, setSavedArticles] = useState([]);
   const { data, isFetching, error } = useGetCryptoNewsQuery();
-
+console.log(data);
   // const handleUrl = (articleUrl) => {
   //   window.open(articleUrl, '_blank');
   // };
