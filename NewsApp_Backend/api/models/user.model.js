@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true,
         unique:true,
-    }
+    },
+    savedArticles:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'SavedArticle',
+    }],
 },{timestamps:true})
 const User = mongoose.model('User',userSchema);
 
