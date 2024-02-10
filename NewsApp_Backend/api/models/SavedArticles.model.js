@@ -42,35 +42,45 @@ const CryptoSchema = new mongoose.Schema({
     },
 },{timestamps : true});
 const WorldSchema = new mongoose.Schema({
-      author : {
+    author: {
         type: String,
-        
+        default: null,
     },
     content: {
         type: String,
-        unique: true,
+        default: null,
     },
-    description:{
+    description: {
         type: String,
-        unique: true,
+        default: null,
     },
     publishedAt: {
-        type: String,
-        unique: true,
+        type: Date,
+        default: Date.now,
+    },
+    source: {
+        id: {
+            type: String,
+            default: null,
+        },
+        name: {
+            type: String,
+            default: null,
+        },
     },
     title: {
         type: String,
-        unique: true,
+        default: null,
     },
     url: {
         type: String,
-        unique: true,
+        default: null,
     },
     urlToImage: {
         type: String,
-        unique: true,
+        default: null,
     },
-},{timestamps:true});
+}, { timestamps: true });
 
 
 

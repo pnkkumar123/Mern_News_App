@@ -4,10 +4,11 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 import { newsApi, cryptonewsApi, forexNewsApi } from "../services/NewsSlice";
-
+import articleSlice from "../services/ArticleSlice";
 // Combine reducers from both stores
 const rootReducer = combineReducers({
   user: userSlice,
+  articles: articleSlice, // Add the articleSlice here
   [newsApi.reducerPath]: newsApi.reducer,
   [cryptonewsApi.reducerPath]: cryptonewsApi.reducer,
   [forexNewsApi.reducerPath]: forexNewsApi.reducer,
