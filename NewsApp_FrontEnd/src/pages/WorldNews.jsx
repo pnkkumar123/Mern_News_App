@@ -2,14 +2,17 @@ import { useState } from "react";
 import { useGetNewsQuery } from "../services/NewsSlice";
 import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
 import {useDispatch,useSelector} from 'react-redux';
-import { savedArticle } from "../actions/Article.Action";
+import { savedArticle } from "../services/ArticleSlice";
 
 
 export default function WorldNews() {
     const [country, setCountry] = useState('us');
     const { data, isFetching, error } = useGetNewsQuery(country);
     console.log(data);
+
     const saveArticle = useSelector(state => state.articles.savedArticle); // Get the savedArticle state from Redux store
+    console.log(saveArticle);
+
     const dispatch = useDispatch();
 
     const handleCountryChange = (newCountry) => {
@@ -17,7 +20,7 @@ export default function WorldNews() {
     };
 
     const isArticleSaved = () => {
-        return saveArticle !== null; // Check if an article is saved
+        return saveArticle !== null && saveArticle !== undefined; // Check if an article is saved
     };
 
     const toggleSaveArticle = (article) => {
