@@ -1,31 +1,44 @@
 import express from 'express';
-import SavedArticles from '../models/SavedArticles.model.js';;
-
+import Article from '../models/SavedArticles.model.js';
 
 const articleRouter = express.Router();
 
-articleRouter.post('/create', async (req, res, next) => {
+export const saveArticle = async (req, res, next) => {
     try {
-        // Data extraction
-        const { api1, api2, api3,userId } = req.body;
+        const articlesData = req.body; // Assuming an array of articles is sent in the request body
 
-        // Check if data from at least two APIs is available
-        if (!api1 && !api2 && !api3) {
-            return res.status(400).json({ error: 'Data from at least one API is required' });
+        // Array to store saved articles
+        const savedArticles = [];
+
+        // Iterate over each article data
+        for (const articleData of articlesData) {
+            const { author, content, description, publishedAt, source, title, url, urlToImage } = articleData;
+
+            // Create a new article instance
+            const article = new Article({
+                author,
+                content,
+                description,
+                publishedAt,
+                source,
+                title,
+                url,
+                urlToImage
+            });
+
+            // Save the article
+            const savedArticle = await article.save();
+            
+            savedArticles.push(savedArticle);
         }
 
-        // Create a new document using SavedArticles model
-        const newSavedArticle = new SavedArticles({ api1, api2, api3 ,userId});
-
-        // Save the document to the database
-        await newSavedArticle.save();
-
-        // Send a success response to the client
-        res.status(201).json({ message: 'Saved article created successfully', SavedArticle: newSavedArticle });
+        res.status(201).json({ message: 'Articles saved successfully', articles: savedArticles });
     } catch (error) {
-        console.error('Error creating saved articles');
+        console.error('Error saving articles:', error);
         next(error);
     }
-});
+};
+
+articleRouter.post('/save', saveArticle);
 
 export default articleRouter;
