@@ -17,51 +17,64 @@ export default function WorldNews() {
         setCountry(newCountry);
     };
 
-    const isArticleSaved = (article) => {
-        return savedArticles.some(savedArticle => savedArticle.id === article.id);
-    };
-
-    const toggleSaveArticle = async (article) => {
-        const isSaved = isArticleSaved(article);
-        
-        if (!isSaved && !loading) {
-            setLoading(true);
-            try {
-                // Send request to save article
-                const response = await fetch('http://localhost:3000/api/articles/save', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify([article]),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    // const isArticleSaved = (article) => {
+    //     return savedArticles.some(savedArticle => savedArticle.id === article.id);
+    // };
+    const saveArticle = async (author, content, description, publishedAt, source, title, url, urlToImage) => {
+        try {
+            // Check if the article already exists in the database
+            const existingArticleResponse = await fetch('http://localhost:3000/api/articles/check', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: title
+                })
+            });
+    
+            if (existingArticleResponse.ok) {
+                const existingArticleData = await existingArticleResponse.json();
+                if (existingArticleData.exists) {
+                    console.log("Article already saved. Do not add it again.");
+                    return; // Exit the function if article already exists
                 }
-
-                const savedArticleData = await response.json();
-                setSavedArticles([...savedArticles, savedArticleData]);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                setSaveError('Error saving article: ' + error.message);
-                console.error('Error saving article: ', error);
+            } else {
+                console.log("Error checking for existing article.");
+                return; // Exit the function if error occurred while checking for existing article
             }
-        } else if (isSaved && !loading) {
-            // Remove article from saved list
-            const updatedSavedArticles = savedArticles.filter(savedArticle => savedArticle.id !== article.id);
-            setSavedArticles(updatedSavedArticles);
+            // If article does not exist, proceed to save it
+            const response = await fetch('http://localhost:3000/api/articles/save', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    author,
+                    content,
+                    description,
+                    publishedAt,
+                    source,
+                    title,
+                    url,
+                    urlToImage
+                })
+            });
+    
+            if (response.ok) {
+                console.log("Article added successfully.");
+            } else {
+                console.log("Error adding article.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
         }
-    };
+    }
+    
+    
+    
 
-    const hashUrl = (url) => {
-        return crypto.SHA256(url).toString(crypto.enc.Hex);
-    };
-
-    const handleArticleClick = (articleUrl) => {
-        setSelectedArticleId(hashUrl(articleUrl));
-    };
+   
 
     return (
         <>
@@ -78,20 +91,33 @@ export default function WorldNews() {
                 ) : null}
 
                 {data && data.articles.map((curElem) => {
-                    const { url, urlToImage, description, publishedAt } = curElem;
+                    const {      author,
+                        content,
+                        description,
+                        publishedAt,
+                        source,
+                        title,
+                        url,
+                        urlToImage } = curElem;
                     console.log(curElem);
                     const id = publishedAt
-                    const isSaved = isArticleSaved(curElem);
-                    const isSelected = selectedArticleId === id;
+                   
                     return (
                         <div key={id} className="relative border border-green-300 rounded-lg shadow-md w-80 h-96 overflow-hidden">
                             <img className="h-full w-full object-cover" src={urlToImage ? urlToImage : "https://www.nccpimandtip.gov.eg/uploads/newsImages/1549208279-default-news.png"} alt="" />
                             <div className="absolute top-0 right-0 p-2">
-                                {isSaved ? (
-                        <RiBookMarkFill onClick={() => toggleSaveArticle(curElem)} className="text-black cursor-pointer" size={24} />
-                      ) : (
-                        <RiBookMarkLine onClick={() => toggleSaveArticle(curElem)} className="text-white cursor-pointer" size={24} />
-                      )}
+                                
+                        <RiBookMarkFill 
+              className="text-black cursor-pointer" size={24} />
+                      
+                        <RiBookMarkLine onClick={() => saveArticle(author,content,
+            description,
+            publishedAt,
+            source,
+            title,
+            url,
+            urlToImage)} className="text-white cursor-pointer" size={24} />
+                 
                             </div>
                             <p className="absolute bottom-0 left-0 right-0 bg-black text-white bg-opacity-75 text-center py-8 text-xs">{description ? description.slice(0, 130) : description}...</p>
                         </div>
