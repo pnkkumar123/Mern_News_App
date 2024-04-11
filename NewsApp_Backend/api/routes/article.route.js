@@ -28,7 +28,7 @@ articleRouter.post('/check', async (req, res) => {
     const { title } = req.body; // Assuming title is the identifier for articles
 
     try {
-        // Query the database to check if article with the given title exists
+        
         const existingArticle = await Article.findOne({ title });
         if (existingArticle) {
             // If article exists, send response indicating that it exists
@@ -43,18 +43,30 @@ articleRouter.post('/check', async (req, res) => {
         res.status(500).json({ error: "Error checking for existing article" });
     }
 });
-articleRouter.delete("/remove/:id",async (req,res)=>{
-   const articleId = req.params.id;
-   try{
-    const deleteArticle = await Article.findByIdAndDelete(articleId);
-    if(deleteArticle){
-        res.json({success:true,message:"article deleted successfully"})
-    }else{
-        res.status(404).json({success:false,message:"article not found"})
-    }
-   }catch (error){
-    console.error("error deleting article : ",error);
-    res.status(500).json({success:false,message:"Error deleting article"})
-   }
+articleRouter.get("/articles",(req,res)=>{
+    Article.find()
+    .then(article=>{
+        return res.status(200).json({article})
+    })
+    .catch(error=>{
+        console.error(error);
+        return res.status(500).json({error:"error ooccured while retrieved"})
+    })
 })
+articleRouter.delete("/remove/:title",async (req,res)=>{
+    const { title } = req.params;
+
+    try {
+        const deletedArticle = await Article.findOneAndDelete({ title });
+        if (deletedArticle) {
+            res.json({ success: true, message: "Article deleted successfully" });
+        } else {
+            res.status(404).json({ success: false, message: "Article not found" });
+        }
+    } catch (error) {
+        console.error("Error deleting article:", error);
+        res.status(500).json({ success: false, message: "Error deleting article" });
+    }
+})
+
 export default articleRouter;

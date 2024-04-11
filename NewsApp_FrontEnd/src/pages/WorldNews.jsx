@@ -2,21 +2,42 @@ import React, { useState } from "react";
 import { useGetNewsQuery } from "../services/NewsSlice";
 import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
 import crypto from 'crypto-js';
+import { useDeleteArticleMutation, useGetArticleQuery } from "../services/ArticleSlice";
 
 export default function WorldNews() {
     const [country, setCountry] = useState('us');
     const { data, isFetching, error } = useGetNewsQuery(country);
     console.log(data);
+    
+
+
+    
+    const [deleteArticle] = useDeleteArticleMutation()
+     
+    const handleDelete = (title)=>{
+        deleteArticle(title)
+        .unwrap()
+        .then(()=>{
+            console.log("product deleted successfully")
+          
+        })
+        .catch((error)=>{
+            console.log("error deleting product")
+        })
+    }
+
 
     const [loading, setLoading] = useState(false);
     const [saveError, setSaveError] = useState(null);
     const [savedArticles, setSavedArticles] = useState([]);
     const [selectedArticleId, setSelectedArticleId] = useState(null);
 
+
+
     const handleCountryChange = (newCountry) => {
         setCountry(newCountry);
     };
-
+    
     // const isArticleSaved = (article) => {
     //     return savedArticles.some(savedArticle => savedArticle.id === article.id);
     // };
@@ -62,6 +83,7 @@ export default function WorldNews() {
             });
     
             if (response.ok) {
+             
                 console.log("Article added successfully.");
             } else {
                 console.log("Error adding article.");
@@ -72,7 +94,7 @@ export default function WorldNews() {
     }
     
     
-    
+   
 
    
 
@@ -100,23 +122,25 @@ export default function WorldNews() {
                         url,
                         urlToImage } = curElem;
                     console.log(curElem);
-                    const id = publishedAt
+               
                    
                     return (
-                        <div key={id} className="relative border border-green-300 rounded-lg shadow-md w-80 h-96 overflow-hidden">
+                        <div key={publishedAt} className="relative border border-green-300 rounded-lg shadow-md w-80 h-96 overflow-hidden">
                             <img className="h-full w-full object-cover" src={urlToImage ? urlToImage : "https://www.nccpimandtip.gov.eg/uploads/newsImages/1549208279-default-news.png"} alt="" />
                             <div className="absolute top-0 right-0 p-2">
-                                
-                        <RiBookMarkFill 
-              className="text-black cursor-pointer" size={24} />
+                            
+    
+                            <RiBookMarkLine onClick={() => saveArticle(author,content,
+                                    description,
+                                    publishedAt,
+                                    source,
+                                    title,
+                                    url,
+                                    urlToImage)} className="text-white cursor-pointer" size={24} />
+  
+                             <RiBookMarkFill onClick={()=> handleDelete(title)}/>
                       
-                        <RiBookMarkLine onClick={() => saveArticle(author,content,
-            description,
-            publishedAt,
-            source,
-            title,
-            url,
-            urlToImage)} className="text-white cursor-pointer" size={24} />
+                     
                  
                             </div>
                             <p className="absolute bottom-0 left-0 right-0 bg-black text-white bg-opacity-75 text-center py-8 text-xs">{description ? description.slice(0, 130) : description}...</p>

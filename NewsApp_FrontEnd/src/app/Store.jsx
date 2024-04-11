@@ -4,6 +4,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 import { newsApi, cryptonewsApi, forexNewsApi } from "../services/NewsSlice";
+import { ArticleApi } from "../services/ArticleSlice";
 
 // Combine reducers from both stores
 const rootReducer = combineReducers({
@@ -26,11 +27,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Merge middleware from both stores
 const store = configureStore({
   reducer: persistedReducer,
+  [ArticleApi.reducerPath]:ArticleApi.reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(
       newsApi.middleware,
+      ArticleApi.middleware,
       cryptonewsApi.middleware,
       forexNewsApi.middleware
     ),
@@ -38,5 +41,7 @@ const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export const {useGetArticleQuery} = ArticleApi
 
 export default store;
