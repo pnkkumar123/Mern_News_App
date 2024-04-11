@@ -121,7 +121,7 @@ export default function WorldNews() {
                         title,
                         url,
                         urlToImage } = curElem;
-                    console.log(curElem);
+                    
                
                    
                     return (

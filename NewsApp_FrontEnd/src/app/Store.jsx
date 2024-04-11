@@ -9,7 +9,7 @@ import { ArticleApi } from "../services/ArticleSlice";
 // Combine reducers from both stores
 const rootReducer = combineReducers({
   user: userSlice,
-   // Add the articleSlice here
+[ArticleApi.reducerPath]:ArticleApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
   [cryptonewsApi.reducerPath]: cryptonewsApi.reducer,
   [forexNewsApi.reducerPath]: forexNewsApi.reducer,
