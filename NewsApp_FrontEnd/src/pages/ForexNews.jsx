@@ -91,7 +91,8 @@ const [deleteArticle] = useDeleteArticleMutation();
                   <img className='h-64 w-full object-cover' src={article_photo_url ? article_photo_url : './assets/exchange.png'} alt="article" />
                   <div className='absolute top-0 right-0 p-2'>
                  
-                      <RiBookMarkFill onClick={() =>handleDelete({title:article_title})} className='text-black cursor-pointer' size={24} />
+                  <RiBookMarkFill onClick={() => handleDelete(article_title)} className='text-black cursor-pointer' size={24} />
+
                   
                       <RiBookMarkLine onClick={() => saveArticle( article_title, article_photo_url, source, post_time_utc, article_url)} className='text-white cursor-pointer' size={24} />
                    

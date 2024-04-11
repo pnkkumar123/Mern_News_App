@@ -12,17 +12,55 @@ console.log(data);
   //   window.open(articleUrl, '_blank');
   // };
 
-  const toggleSaveArticle = (article) => {
-    if (savedArticles.some(savedArticle => savedArticle.createdAt === article.createdAt)) {
-      setSavedArticles(savedArticles.filter(savedArticle => savedArticle.createdAt !== article.createdAt));
-    } else {
-      setSavedArticles([...savedArticles, article]);
-    }
-  };
+  const saveArticle = async ( url,
+    thumbnail,
+    createdAt,
+    description,
+    title) => {
+    try {
+        const existingArticleResponse = await fetch('http://localhost:3000/api/crypto/check', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title: title
+            })
+        });
 
-  const isArticleSaved = (article) => {
-    return savedArticles.some(savedArticle => savedArticle.createdAt === article.createdAt);
-  };
+        if (!existingArticleResponse.ok) {
+            throw new Error("Error checking for existing article.");
+        }
+
+        const existingArticleData = await existingArticleResponse.json();
+        if (existingArticleData.exists) {
+            console.log("Article already saved. Do not add it again.");
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/api/crypto/add', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url,
+              thumbnail,
+              createdAt,
+              description,
+              title
+            })
+        });
+
+        if (response.ok) {
+            console.log("Article added successfully.");
+        } else {
+            console.log("Error adding article.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
 
   const currentArticles = data?.data?.slice((currentPage - 1) * articlesPerPage, currentPage * articlesPerPage);
 
@@ -39,16 +77,20 @@ console.log(data);
           
             {currentArticles &&
               currentArticles.map((curElem) => {
-                const { title, thumbnail, createdAt, description, articleUrl } = curElem;
+                const { title, thumbnail, createdAt, description, url } = curElem;
                 return (
                   <div key={createdAt} className="relative border border-green-300 rounded-lg shadow-md overflow-hidden lg:col-span-1">
                     <img className="h-64 w-full object-cover" src={thumbnail ? thumbnail : './assets/bitcoin.png'} alt="" />
                     <div className="absolute top-0 right-0 p-2">
-                      {isArticleSaved(curElem) ? (
-                        <RiBookMarkFill onClick={() => toggleSaveArticle(curElem)} className="text-black cursor-pointer" size={24} />
-                      ) : (
-                        <RiBookMarkLine onClick={() => toggleSaveArticle(curElem)} className="text-white cursor-pointer" size={24} />
-                      )}
+                 
+                        {/* <RiBookMarkFill onClick={() => toggleSaveArticle(curElem)} className="text-black cursor-pointer" size={24} /> */}
+                   
+                        <RiBookMarkLine onClick={() => saveArticle( url,
+        thumbnail,
+        createdAt,
+        description,
+        title)} className="text-white cursor-pointer" size={24} />
+                    
                     </div>
                     <p className="absolute bottom-0 left-0 right-0 bg-black text-white bg-opacity-75 text-center py-2 text-xs">{description ? description.slice(0, 90) : description}</p>
                   </div>

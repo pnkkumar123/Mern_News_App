@@ -6,6 +6,7 @@ import { authRouter } from './routes/auth.route.js';
 import cors from 'cors';
 import articleRouter from './routes/article.route.js';
 import appRouting from './routes/ForexArticle.js';
+import cryptoRoute from './routes/CryptoArticle.js';
 
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api/user",router);
 app.use("/api/auth",authRouter);
 app.use("/api/articles",articleRouter);
 app.use("/api/forex",appRouting);
+app.use("/api/crypto",cryptoRoute);
 
 app.use((error,req,res,next)=>{
     const statusCode = error.statusCode || 500;
