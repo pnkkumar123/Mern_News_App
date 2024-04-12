@@ -11,6 +11,7 @@ import SignIn from './pages/SignIn';
 import Edit from './pages/Profile/Edit';
 import SavedArticles from './pages/Profile/SavedArticles';
 import Profile from './pages/Profile/Profile';
+import SingleWorldNews from './pages/SingleWorldNews';
 
 function App() {
  
@@ -24,6 +25,7 @@ function App() {
         <Route  path='/forexnews' element={<ForexNews/>}/>
         <Route  path='/cryptonews' element={<CryptoNews/>}/>
         <Route  path='/worldnews' element={<WorldNews/>}/>
+        <Route path='/worldnews/:title' element={<SingleWorldNews/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/signin' element={<SignIn/>}/>
         <Route path='/edit' element={<Edit/>}/>

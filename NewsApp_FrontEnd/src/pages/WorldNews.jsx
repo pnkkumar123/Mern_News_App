@@ -3,12 +3,13 @@ import { useGetNewsQuery } from "../services/NewsSlice";
 import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
 import crypto from 'crypto-js';
 import { useDeleteArticleMutation, useGetArticleQuery } from "../services/ArticleSlice";
+import { Link, useParams } from "react-router-dom";
 
 export default function WorldNews() {
     const [country, setCountry] = useState('us');
     const { data, isFetching, error } = useGetNewsQuery(country);
     console.log(data);
-    
+ 
 
 
     
@@ -27,10 +28,6 @@ export default function WorldNews() {
     }
 
 
-    const [loading, setLoading] = useState(false);
-    const [saveError, setSaveError] = useState(null);
-    const [savedArticles, setSavedArticles] = useState([]);
-    const [selectedArticleId, setSelectedArticleId] = useState(null);
 
 
 
@@ -126,7 +123,7 @@ export default function WorldNews() {
                    
                     return (
                         <div key={publishedAt} className="relative border border-green-300 rounded-lg shadow-md w-80 h-96 overflow-hidden">
-                            <img className="h-full w-full object-cover" src={urlToImage ? urlToImage : "https://www.nccpimandtip.gov.eg/uploads/newsImages/1549208279-default-news.png"} alt="" />
+                         <Link to={`/worldnews/${title}`}>   <img className="h-full w-full object-cover" src={urlToImage ? urlToImage : "https://www.nccpimandtip.gov.eg/uploads/newsImages/1549208279-default-news.png"} alt="" /></Link>
                             <div className="absolute top-0 right-0 p-2">
                             
     

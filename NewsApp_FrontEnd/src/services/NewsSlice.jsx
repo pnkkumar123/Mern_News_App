@@ -16,6 +16,9 @@ const newsApi = createApi({
   endpoints: (builder) => ({
     getNews: builder.query({
       query: (country) => `top-headlines?country=${country}&apiKey=${apiKey}`
+    }),
+    getSingleNews:builder.query({
+         query:(title)=>`everything?q=${encodeURIComponent(title)}&apiKey=${apiKey}`
     })
   })
 });
@@ -43,7 +46,7 @@ const forexNewsApi = createApi({
 })
 
 // Exporting hooks for using the API
-export const { useGetNewsQuery } = newsApi;
+export const { useGetNewsQuery,useGetSingleNewsQuery } = newsApi;
 export const { useGetCryptoNewsQuery } = cryptonewsApi;
 export const {useGetForexNewsQuery} = forexNewsApi;
 
