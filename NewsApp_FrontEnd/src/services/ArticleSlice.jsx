@@ -9,15 +9,29 @@ const ArticleApi = createApi({
           }),
         deleteArticle: builder.mutation({
             query: (title) => ({
-                url: `api/articles/remove/${title}`, // Modify the URL to include the article ID
+                url: `api/articles/remove/${title}`, 
                 method: 'DELETE'
             })
         }),
+        deleteForexArticle:builder.mutation({
+            query:(article_title)=>({
+                url:`api/forex/remove/${article_title}`,
+                method:'DELETE'
+            })
+        }),
+        deleteCrytoArticle:builder.mutation({
+            query:(title)=>({
+                url:`api/crypto/remove/${title}`,
+                method:'DELETE'
+            })
+        })
     })
 });
 
 export const {
     useDeleteArticleMutation,
+    useDeleteForexArticleMutation,
+    useDeleteCrytoArticleMutation,
     useGetArticleQuery,
 } = ArticleApi;
 

@@ -1,16 +1,33 @@
 import React, { useState } from 'react';
 import { useGetCryptoNewsQuery } from '../services/NewsSlice';
 import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
+import { useDeleteCrytoArticleMutation } from '../services/ArticleSlice';
 
 export default function CryptoNews() {
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesPerPage] = useState(10);
+  const [deleteArticle] = useDeleteCrytoArticleMutation()
   const [savedArticles, setSavedArticles] = useState([]);
   const { data, isFetching, error } = useGetCryptoNewsQuery();
 console.log(data);
   // const handleUrl = (articleUrl) => {
   //   window.open(articleUrl, '_blank');
   // };
+
+
+  // delete function
+  const handleDelete = (title)=>{
+    deleteArticle(title)
+    .unwrap()
+    .then(()=>{
+      console.log("article deleted successfully")
+    })
+    .catch((e)=>{
+      console.log(e)
+
+    })
+  }
+
 
   const saveArticle = async ( url,
     thumbnail,
@@ -83,7 +100,7 @@ console.log(data);
                     <img className="h-64 w-full object-cover" src={thumbnail ? thumbnail : './assets/bitcoin.png'} alt="" />
                     <div className="absolute top-0 right-0 p-2">
                  
-                        {/* <RiBookMarkFill onClick={() => toggleSaveArticle(curElem)} className="text-black cursor-pointer" size={24} /> */}
+                        <RiBookMarkFill onClick={() => handleDelete(title)} className="text-black cursor-pointer" size={24} />
                    
                         <RiBookMarkLine onClick={() => saveArticle( url,
         thumbnail,

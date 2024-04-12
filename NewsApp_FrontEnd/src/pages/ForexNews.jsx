@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { IoBookmarkOutline } from 'react-icons/io5'; 
 import { useGetForexNewsQuery } from '../services/NewsSlice';
 import { RiBookMarkFill, RiBookMarkLine } from 'react-icons/ri';
-import { useDeleteArticleMutation } from '../services/ArticleSlice';
+import { useDeleteForexArticleMutation } from '../services/ArticleSlice';
 
 export default function ForexNews() {
   const { data, isFetching, error } = useGetForexNewsQuery();
   console.log(data);
  
-const [deleteArticle] = useDeleteArticleMutation();
-
-  const handleDelete = (title)=>{
-    deleteArticle(title)
+const [deleteArticle] = useDeleteForexArticleMutation()
+  const handleDelete = (article_title)=>{
+    deleteArticle(article_title)
     .unwrap()
     .then(()=>{
-        console.log("product deleted successfully")
+        console.log("article deleted successfully")
       
     })
     .catch((error)=>{
