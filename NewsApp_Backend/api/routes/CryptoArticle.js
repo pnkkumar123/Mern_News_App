@@ -41,6 +41,20 @@ cryptoRoute.post("/check", async (req, res) => {
         }
     }
 });
+cryptoRoute.delete("/remove/:title",async (req,res)=>{
+    try{
+        const {title} = req.params;
+        const deletedArticle = await Crypto.findOneAndDelete({title});
+        if(deletedArticle){
+            res.json({success:true,message:"article added successfully"})
+        }else{
+            res.status(404).json({success:false,message:"article not found"})
+        }
+    }catch(e){
+        console.log(e);
+        res.status(500).json({success:false,message:"error saving article"})
 
+    }
+})
 
 export default cryptoRoute;

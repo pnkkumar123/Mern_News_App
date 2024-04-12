@@ -34,4 +34,18 @@ appRouting.post("/check",async(req,res)=>{
     res.status(500).json({message:"error",e})
   }
 })
+appRouting.delete("/remove/:article_title",async(req,res)=>{
+  try{
+const {article_title} = req.params;
+const deletedArticle = await forex.findOneAndDelete({article_title});
+if(deletedArticle){
+  res.json({success:true,message:"article deleted successfully"})
+}else{
+  res.status(404).json({success:false,message:"article not found"})
+}
+  }catch(e){
+    console.log(e)
+    res.status(500).json({success:false,message:e})
+  }
+})
 export default appRouting;
