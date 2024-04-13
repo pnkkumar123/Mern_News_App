@@ -87,7 +87,7 @@ const [deleteArticle] = useDeleteForexArticleMutation()
               return (
                 <div key={post_time_utc} className={`relative border border-green-300 rounded-lg shadow-md overflow-hidden lg:col-span-1 ${index < 3 ? 'lg:flex lg:flex-row' : ''}`}>
                  
-                  <img className='h-64 w-full object-cover' src={article_photo_url ? article_photo_url : './assets/exchange.png'} alt="article" />
+                  <img onClick={handleUrl} className='h-64 w-full object-cover' src={article_photo_url ? article_photo_url : './assets/exchange.png'} alt="article" />
                   <div className='absolute top-0 right-0 p-2'>
                  
                   <RiBookMarkFill onClick={() => handleDelete(article_title)} className='text-black cursor-pointer' size={24} />

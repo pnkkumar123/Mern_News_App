@@ -12,7 +12,7 @@ import Edit from './pages/Profile/Edit';
 import SavedArticles from './pages/Profile/SavedArticles';
 import Profile from './pages/Profile/Profile';
 import SingleWorldNews from './pages/SingleWorldNews';
-import SingleForex from './pages/SingleForex';
+
 
 function App() {
  
