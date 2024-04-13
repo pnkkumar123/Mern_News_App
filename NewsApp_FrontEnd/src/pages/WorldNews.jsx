@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useGetNewsQuery } from "../services/NewsSlice";
 import { RiBookMarkLine, RiBookMarkFill } from 'react-icons/ri';
-import crypto from 'crypto-js';
+
 import { useDeleteArticleMutation, useGetArticleQuery } from "../services/ArticleSlice";
 import { Link, useParams } from "react-router-dom";
 

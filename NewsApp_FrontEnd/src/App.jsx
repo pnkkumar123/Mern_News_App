@@ -12,6 +12,7 @@ import Edit from './pages/Profile/Edit';
 import SavedArticles from './pages/Profile/SavedArticles';
 import Profile from './pages/Profile/Profile';
 import SingleWorldNews from './pages/SingleWorldNews';
+import SingleForex from './pages/SingleForex';
 
 function App() {
  
@@ -23,6 +24,7 @@ function App() {
         <Route  path='/' element={<Home/>}/>
         <Route path='/worldslide' element={<WorldSlide/>}/>
         <Route  path='/forexnews' element={<ForexNews/>}/>
+       
         <Route  path='/cryptonews' element={<CryptoNews/>}/>
         <Route  path='/worldnews' element={<WorldNews/>}/>
         <Route path='/worldnews/:title' element={<SingleWorldNews/>}/>
