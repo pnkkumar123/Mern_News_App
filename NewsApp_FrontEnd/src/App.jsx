@@ -12,6 +12,7 @@ import Edit from './pages/Profile/Edit';
 import SavedArticles from './pages/Profile/SavedArticles';
 import Profile from './pages/Profile/Profile';
 import SingleWorldNews from './pages/SingleWorldNews';
+import SearchTerm from './pages/SearchTerm';
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <Route  path='/' element={<Home/>}/>
         <Route path='/worldslide' element={<WorldSlide/>}/>
         <Route  path='/forexnews' element={<ForexNews/>}/>
-       
+       <Route path='/searchterm' element={<SearchTerm/>}/>
         <Route  path='/cryptonews' element={<CryptoNews/>}/>
         <Route  path='/worldnews' element={<WorldNews/>}/>
         <Route path='/worldnews/:title' element={<SingleWorldNews/>}/>

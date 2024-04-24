@@ -1,5 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom';
+import SearchTerm from './SearchTerm';
 
 export default function NavBar() {
   return (
@@ -10,6 +11,9 @@ export default function NavBar() {
 
         <h1 className='font-bold '>FOREX-CRYPTO-WORLD</h1>
     </NavLink>
+    </div>
+    <div className="search flex flex-row justify-between">
+    <NavLink to='/searchterm'>Search</NavLink>
     </div>
     <div className='flex flex-row justify-center gap-6 font-bold'>
       <NavLink to='/cryptonews'>Crypto </NavLink>

@@ -19,6 +19,9 @@ const newsApi = createApi({
     }),
     getSingleNews:builder.query({
          query:(title)=>`everything?q=${encodeURIComponent(title)}&apiKey=${apiKey}`
+    }),
+    getSearch:builder.query({
+      query:(searchTerm)=>`everything?q=${searchTerm}&apiKey=${apiKey}`
     })
   })
 });
@@ -46,7 +49,7 @@ const forexNewsApi = createApi({
 })
 
 // Exporting hooks for using the API
-export const { useGetNewsQuery,useGetSingleNewsQuery } = newsApi;
+export const { useGetNewsQuery,useGetSingleNewsQuery,useGetSearchQuery} = newsApi;
 export const { useGetCryptoNewsQuery } = cryptonewsApi;
 export const {useGetForexNewsQuery} = forexNewsApi;
 
